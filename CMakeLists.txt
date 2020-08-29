@@ -12,7 +12,11 @@ add_executable(FoamLib main.cpp
     menu.cpp
     turbulanceCalculator.h
     turbulanceCalculator.cpp
-    yppCalculator.h
-    yppCalculator.cpp
+    turbulanceCalculatorMenu.h
+    turbulanceCalculatorMenu.cpp
+    ypCalculator.h
+    ypCalculator.cpp
+    ypCalculatorMenu.h
+    ypCalculatorMenu.cpp
     )
 

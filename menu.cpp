@@ -3,36 +3,45 @@
 
 namespace Menu
 {
-void printMenu(std::string opt[])
+void printMenu(std::vector<std::string> opt)
 {
     std::cout << "Avilable option:\n";
-    int numOfOptions{std::stoi(opt[0])};
-    for(int i{ 1 }; i<=numOfOptions;i++)
+    int numOfOptions = opt.size();
+    for(int i{ 0 }; i<numOfOptions;i++)
     {
-        std::cout << i << ". " << opt[i] << '\n';
+        std::cout << i+1 << ". " << opt[i] << '\n';
     }
+    std::cout << numOfOptions+1 << ". Exit\n";
+
 
 }
 
 int readMenuInput()
 {
-//    std::cin.ignore(32767, '\n');
     std::cout << "Please choose one option: ";
     int choice{ 0 };
     std::cin >> choice;
     std::cin.ignore(32767, '\n');
+    choice -= 1;
 
     return choice;
 }
 
-int menu(std::string opt[])
+int menu(std::vector<std::string> opt)
     {
         printMenu(opt);
-        std::cout << "0. Exit\n";
         int choice {readMenuInput()};
         system("clear");
         return choice;
 }
+
+void backToMenu()
+{
+    std::cout << "Press Enter to return to main screen.";
+    std::cin.ignore();
+    system("clear");
+}
+
 
 double readValueInput(std::string variable)
 {
@@ -44,5 +53,7 @@ double readValueInput(std::string variable)
 
     return choice;
 }
+
+
 
 }
