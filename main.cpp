@@ -1,3 +1,5 @@
+#include "fluidDatabase.h"
+#include "foamFileRW.h"
 #include "menu.h"
 #include "turbulanceCalculatorMenu.h"
 #include "ypCalculatorMenu.h"
@@ -6,7 +8,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-
 
 
 
@@ -23,7 +24,7 @@ int main()
     };
 
     std::vector<std::string> opt{"Turbulance calculator", "Y+ calculator", "Fluid Database"};
-    std::cout << std::scientific << "OpenFOAM easy tools\n";
+    std::cout << "OpenFOAM easy tools\n";
     int m;
     do
     {
@@ -37,15 +38,15 @@ int main()
             YpCalculatorMenu::calculateYPMenu();
             break;
         case FLUID_DATABASE:
-            std::cout << "selected op 3\n"; //napisati kod
+            FluidDatabase::menu();
             break;
+
 
         }
     } while (m != EXIT_MENU);
 
-//    std::string path{"/home/markok/FoamLib/U"};
-//    Menu::getValue(Menu::readFile(path),"inlet");
-//    Menu::readFile(path);
+
+
 
     return 0;
 }

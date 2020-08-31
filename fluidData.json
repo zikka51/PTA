@@ -1,19 +1,20 @@
-[{
-        "name": "air",
-        "density": 1.225,
-        "viscosity": 1.7894e-5,
-        "compressable": true
-    },
+[
     {
-        "name": "water-liquid",
+        "compressable": false,
         "density": 998.2,
-        "viscosity": 0.001003,
-        "compressable": false
+        "name": "water-liquid",
+        "viscosity": 0.001003
     },
     {
-        "name": "water-vapor",
+        "compressable": false,
         "density": 0.5542,
-        "viscosity": 1.34e-5,
-        "compressable": false
+        "name": "water-vapor",
+        "viscosity": 1.34e-05
     },
+    {
+        "compressable": true,
+        "density": 1.225,
+        "name": "air",
+        "viscosity": 1.7894e-05
+    }
 ]

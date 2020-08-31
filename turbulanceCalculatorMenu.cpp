@@ -32,6 +32,7 @@ void menu()
         "Turbulence eddy viscosity ratio from turbulence kinetic energy and specific dissipation"
        };
     std::cout << "Turbulance Calculator\n";
+    std::cout << std::scientific;
     int m{Menu::menu(opt)};
     switch (m)
     {

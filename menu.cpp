@@ -38,6 +38,7 @@ int menu(std::vector<std::string> opt)
 void backToMenu()
 {
     std::cout << "Press Enter to return to main screen.";
+    std::cout << std::defaultfloat;
     std::cin.ignore();
     system("clear");
 }
@@ -48,10 +49,38 @@ double readValueInput(std::string variable)
     std::cout << "Please input the value for " << variable << ": ";
     double choice{ 0.0 };
     std::cin >> choice;
-//    std::cout << "Enterd: " << choice << '\n';
     std::cin.ignore(32767, '\n');
 
     return choice;
+}
+
+std::string readStringInput(std::string variable)
+{
+    std::cout << "Please enter the " << variable << ": ";
+    std::string name;
+    std::getline(std::cin, name);
+
+    return name;
+}
+
+bool readBoolInput()
+{
+    std::cout << "Please input 1(true) or 0(false): ";
+    bool line;
+    bool lineOK = false;
+    do
+    {
+        try
+        {
+            std::cin >> line;
+            lineOK = true;
+        }  catch (...)
+        {
+            std::cout << "Pease enter 1 or 0!\n";
+        }
+    } while (!lineOK);
+
+    return line;
 }
 
 

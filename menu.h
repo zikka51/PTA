@@ -17,7 +17,8 @@ void backToMenu();
 int readMenuInput();
 double readValueInput(std::string variable);
 
-
+std::string readStringInput(std::string variable);
+bool readBoolInput();
 }
 
 #endif // MENU_H
