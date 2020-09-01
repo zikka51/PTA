@@ -40,12 +40,14 @@ int main()
         case FLUID_DATABASE:
             FluidDatabase::menu();
             break;
-
-
         }
     } while (m != EXIT_MENU);
 
-
+//    std::string path{"/home/markok/OpenFOAM/markok-8/run/pitzDaily/0/U"};
+//    std::string file{FoamFileRW::loadFile(path)};
+//    FoamFileRW::replace(file,FoamFileRW::getValueU(path,"inlet"),"(11 22 33)");
+//    std::ofstream newFile{"/home/markok/OpenFOAM/markok-8/run/pitzDaily/0/U"};
+//    newFile << file;
 
 
     return 0;

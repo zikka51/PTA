@@ -1,11 +1,12 @@
 #include "foamFileRW.h"
 
-
-std::vector<std::string> FoamFileRW::readFile(std::string path)
+namespace FoamFileRW
+{
+std::vector<std::string> readFile(std::string fullPath)
 {
     std::vector<std::string> fileContenst;
     std::string str;
-    std::ifstream file(path);
+    std::ifstream file(fullPath);
     while (file >> str)
     {
         fileContenst.push_back(str);
@@ -14,9 +15,10 @@ std::vector<std::string> FoamFileRW::readFile(std::string path)
     return fileContenst;
 }
 
-std::vector<double> FoamFileRW::getValue(std::vector<std::string> file, std::string varName)
+std::string getValueU(std::string fullPath, std::string varName)
 {
-    std::vector<double> value{1.0};
+    std::vector<std::string> file{readFile(fullPath)};
+    std::string value;
     bool varNameFound{false};
     for (uint i{0};i<file.size();++i)
     {
@@ -26,22 +28,99 @@ std::vector<double> FoamFileRW::getValue(std::vector<std::string> file, std::str
         {
             if (file.at(i+2)[0] == '(')
             {
-                std::string s = file.at(i+2);
-                value[0] = std::stod(s.erase(0, 1));
-                value.push_back(std::stod(file.at(i+3)));
-                s = file.at(i+4);
-                s.erase(s.end()-2,s.end());
-                value.push_back(std::stod(s));
+                for (int j{2}; j<4; ++j)
+                    value += file.at(i+j) + ' ';
+                value += file.at(i+4);
                 varNameFound = false;
             }
             else
             {
-                std::string s = file.at(i+2);
-                s.erase(s.end(),s.end());
-                value[0] = std::stod(s);
+                value = file.at(i+2);
                 varNameFound = false;
             }
         }
     }
+//    std::cout << value << '\n';
     return value;
+}
+
+std::string getValue(std::string fullPath)
+{
+    std::vector<std::string> file{readFile(fullPath)};
+    std::string value;
+    for (uint i{0};i<file.size();++i)
+    {
+        if (file.at(i) == "uniform")
+        {
+            value = file.at(i+1);
+            break;
+        }
+    }
+
+//    std::cout << value << '\n';
+    return value;
+}
+
+void replace(std::string &initialString, std::string whatToReplace, std::string withWhat){
+    size_t rpos=initialString.find(whatToReplace);
+    bool noMore{false};
+    do
+    {
+        if (rpos!=std::string::npos)
+            initialString.replace(initialString.begin()+rpos, initialString.begin()+rpos+whatToReplace.length(), withWhat);
+        else
+            noMore =true;
+        rpos=initialString.find(whatToReplace);
+    } while (!noMore);
+}
+
+std::string loadFile(std::string fullPath)
+{
+  std::ifstream ifs(fullPath);
+  std::string content( (std::istreambuf_iterator<char>(ifs) ),
+                       (std::istreambuf_iterator<char>()    ) );
+  return content;
+}
+
+
+
+void writeToFile(std::string fullPath, std::string fileName, double var)
+{
+    std::string file{FoamFileRW::loadFile(fullPath+"/0/"+fileName)};
+    FoamFileRW::replace(file,FoamFileRW::getValue(fullPath+"/0/"+fileName),std::to_string(var)+';');
+    std::ofstream newFile{fullPath+"/0/"+fileName};
+    newFile << file;
+}
+
+void writeToFileMenu(std::string name, double var)
+{
+    std::cout << "Write to file 1(yes) or 0(no): ";
+    bool writeOK{false};
+    std::cin >> writeOK;
+    if (writeOK)
+    {
+        std::string path;
+        std::cout << "Enter full path to case folder:\n";
+        std::cin >> path;
+        FoamFileRW::writeToFile(path,name,var);
+    }
+}
+
+void writeToFileMenu(std::string name[], double var[])
+{
+    std::cout << "Write to file 1(yes) or 0(no): ";
+    bool writeOK{false};
+    std::cin >> writeOK;
+    if (writeOK)
+    {
+        std::string path;
+        std::cout << "Enter full path to case folder:\n";
+        std::cin >> path;
+        for (int i{0}; i<3; ++i)
+            FoamFileRW::writeToFile(path,name[i],var[i]);
+    }
+}
+
+
+
 }

@@ -1,6 +1,7 @@
 #ifndef TURBULANCECALCULATORMENU_H
 #define TURBULANCECALCULATORMENU_H
 
+#include "foamFileRW.h"
 #include "menu.h"
 #include "turbulanceCalculator.h"
 

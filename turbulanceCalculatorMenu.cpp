@@ -42,8 +42,7 @@ void menu()
         break;
     case EPSILON_FROM_K_OMEGA:
         epsilon_from_k_omegaCalc();
-        std::cout << "Press Enter to return to main screen.";
-        std::cin.ignore();
+        Menu::backToMenu();
         break;
     case TURBULENCE_VARIABLES_FROM_INTENSITY_LENGTH_SCALE:
         turbulence_variables_from_intensity_length_scaleCalc();
@@ -82,7 +81,7 @@ void menu()
         break;
     }
 }
-
+// /home/markok/OpenFOAM/markok-8/run/pitzDaily
 
 void omega_from_k_epsilonCalc()
 {
@@ -92,8 +91,10 @@ void omega_from_k_epsilonCalc()
                             Menu::readValueInput(varNames.epsilon))};
 
     std::cout <<  "ω: " << omega << '\n';
+    FoamFileRW::writeToFileMenu("omega",omega);
 
 }
+
 
 void epsilon_from_k_omegaCalc()
 {
@@ -103,6 +104,7 @@ void epsilon_from_k_omegaCalc()
                                         Menu::readValueInput(varNames.omega))};
 
     std::cout << "ɛ: " << epsilon << '\n';
+    FoamFileRW::writeToFileMenu("epsilon",epsilon);
 }
 
 void turbulence_variables_from_intensity_length_scaleCalc()
@@ -118,6 +120,9 @@ void turbulence_variables_from_intensity_length_scaleCalc()
                             Menu::readValueInput(varNames.tu));
 
     std::cout << "k: " << k << ", ɛ: " << epsilon << ", ω: " << omega << '\n';
+    std::string names[3]{"k","epsilon","omega"};
+    double var[3]{k,epsilon,omega};
+    FoamFileRW::writeToFileMenu(names,var);
 
 }
 
@@ -134,6 +139,9 @@ void turbulence_variables_from_intensity_eddy_viscosity_ratioCalc()
                     Menu::readValueInput(varNames.ni),
                     Menu::readValueInput(varNames.mitMi));
     std::cout << "k: " << k << ", ɛ: " << epsilon << ", ω: " << omega << '\n';
+    std::string names[3]{"k","epsilon","omega"};
+    double var[3]{k,epsilon,omega};
+    FoamFileRW::writeToFileMenu(names,var);
 
 }
 
